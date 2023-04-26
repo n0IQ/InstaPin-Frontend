@@ -1,24 +1,42 @@
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import {
+  Route,
+  createBrowserRouter,
+  createRoutesFromElements,
+  RouterProvider,
+} from "react-router-dom";
+import Header from "./components/Header";
+import Login from "./components/Login";
+import Signup from "./components/Signup";
+import Pins from "./components/Pins";
+import Pin from "./pages/Pin";
+import PinButton from "./components/PinButton";
+import AddPin from "./components/AddPin";
 
 function App() {
+  const router = createBrowserRouter(
+    createRoutesFromElements(
+      <>
+        <Route path="/login" element={<Login />}></Route>
+        <Route path="/signup" element={<Signup />}></Route>
+        <Route path="/" element={<Pins />}></Route>
+        {/* <Route path="/myPins/"></Route> */}
+        {/* <Route path="/savedPins/"></Route> */}
+        <Route path="/pins/:id" element={<Pin />}></Route>
+        <Route path="/createPin" element={<AddPin />}></Route>
+        {/* <Route path="*"></Route> */}
+      </>
+    )
+  );
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <Header />
+      <div>
+        <RouterProvider router={router} />
+      </div>
+      <PinButton />
+    </>
   );
 }
 
