@@ -7,9 +7,28 @@ import reportWebVitals from "./reportWebVitals";
 import dotenv from "dotenv";
 dotenv.config();
 
+const cache = new InMemoryCache({
+  typePolicies: {
+    Query: {
+      fields: {
+        pins: {
+          merge(existing, incoming) {
+            return incoming;
+          },
+        },
+        users: {
+          merge(existing, incoming) {
+            return incoming;
+          },
+        },
+      },
+    },
+  },
+});
+
 const client = new ApolloClient({
   uri: "http://localhost:5000/graphql",
-  cache: new InMemoryCache(),
+  cache,
 });
 
 const root = ReactDOM.createRoot(document.getElementById("root"));

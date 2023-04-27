@@ -3,6 +3,7 @@ import jwt from "jsonwebtoken";
 import { useMutation } from "@apollo/client";
 import { ADD_PIN } from "../mutations/pinMutation";
 import { Box, TextField, Button } from "@mui/material";
+import { GET_PINS } from "../queries/pinQueries";
 
 const UploadPinForm = () => {
   const token = localStorage.getItem("token");
@@ -47,6 +48,14 @@ const UploadPinForm = () => {
       description,
       link,
       userId,
+    },
+
+    update(cache, { data: { createPin } }) {
+      const { pins } = cache.readQuery({ query: GET_PINS });
+      cache.writeQuery({
+        query: GET_PINS,
+        data: { pins: [...pins, createPin] },
+      });
     },
   });
 

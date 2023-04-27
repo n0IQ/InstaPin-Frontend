@@ -1,18 +1,21 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import jwt from "jsonwebtoken";
 
 function Header() {
-  const [loggedIn, setLoggedIn] = useState(false);
-  const [username, setUsername] = useState("");
+  let [loggedIn, setLoggedIn] = useState(false);
+  let [userName, setUserName] = useState("");
 
   // useEffect(() => {
   //   const token = localStorage.getItem("token");
   //   if (token) {
   //     setLoggedIn(true);
-  //     // Get the username from the token
+  //     const decoded = jwt.decode(token);
+  //     setUserName(decoded.userName);
+  //     console.log(loggedIn, userName);
   //   }
-  // }, []);
+  // }, [loggedIn, userName]);
 
   const handleSignUp = () => {
     // Redirect the user to the login page
@@ -22,7 +25,7 @@ function Header() {
   const handleLogout = () => {
     localStorage.removeItem("token");
     setLoggedIn(false);
-    setUsername("");
+    setUserName("");
   };
 
   return (
@@ -77,7 +80,7 @@ function Header() {
                 marginRight: "30px",
                 fontSize: "1.5rem",
               }}>
-              {username}
+              {userName}
             </p>
             <button
               style={{
