@@ -4,6 +4,7 @@ import {
   createBrowserRouter,
   createRoutesFromElements,
   RouterProvider,
+  Outlet,
 } from "react-router-dom";
 import Header from "./components/Header";
 import Login from "./components/Login";
@@ -16,7 +17,14 @@ import AddPin from "./components/AddPin";
 function App() {
   const router = createBrowserRouter(
     createRoutesFromElements(
-      <>
+      <Route
+        element={
+          <>
+            <Header />
+            <Outlet />
+            <PinButton />
+          </>
+        }>
         <Route path="/login" element={<Login />}></Route>
         <Route path="/signup" element={<Signup />}></Route>
         <Route path="/" element={<Pins />}></Route>
@@ -25,18 +33,14 @@ function App() {
         <Route path="/pins/:id" element={<Pin />}></Route>
         <Route path="/createPin" element={<AddPin />}></Route>
         {/* <Route path="*"></Route> */}
-      </>
+      </Route>
     )
   );
 
   return (
-    <>
-      <Header />
-      <div>
-        <RouterProvider router={router} />
-      </div>
-      <PinButton />
-    </>
+    <div>
+      <RouterProvider router={router} />
+    </div>
   );
 }
 

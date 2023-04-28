@@ -1,7 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
+import { useLoginStore } from "../store/store";
 
 export default function PinButton() {
-  let [loggedIn, setLoggedIn] = useState(false);
+  const loggedIn = useLoginStore((state) => state.loggedIn);
+  const setLoggedIn = useLoginStore((state) => state.setLoggedIn);
 
   useEffect(() => {
     const token = localStorage.getItem("token");

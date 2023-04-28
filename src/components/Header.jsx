@@ -2,20 +2,23 @@ import React from "react";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import jwt from "jsonwebtoken";
+import { useLoginStore } from "../store/store";
 
 function Header() {
-  let [loggedIn, setLoggedIn] = useState(false);
-  let [userName, setUserName] = useState("");
+  const [userName, setUserName] = useState("");
 
-  // useEffect(() => {
-  //   const token = localStorage.getItem("token");
-  //   if (token) {
-  //     setLoggedIn(true);
-  //     const decoded = jwt.decode(token);
-  //     setUserName(decoded.userName);
-  //     console.log(loggedIn, userName);
-  //   }
-  // }, [loggedIn, userName]);
+  const loggedIn = useLoginStore((state) => state.loggedIn);
+  const setLoggedIn = useLoginStore((state) => state.setLoggedIn);
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      setLoggedIn(true);
+      const decoded = jwt.decode(token);
+      setUserName(decoded.userName);
+      console.log(loggedIn, userName);
+    }
+  }, [loggedIn, userName, localStorage.getItem("token")]);
 
   const handleSignUp = () => {
     // Redirect the user to the login page

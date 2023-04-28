@@ -29,12 +29,12 @@ const theme = createTheme();
 export default function SignUp() {
   const navigate = useNavigate();
 
-  let [firstName, setFirstName] = useState("");
-  let [lastName, setLastName] = useState("");
-  let [userName, setUserName] = useState("");
-  let [email, setEmail] = useState("");
-  let [password, setPassword] = useState("");
-  let [passwordConfirm, setPasswordConfirm] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [userName, setUserName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [passwordConfirm, setPasswordConfirm] = useState("");
 
   const [signup] = useMutation(SIGNUP, {
     variables: {
@@ -52,12 +52,12 @@ export default function SignUp() {
     const data = new FormData(event.currentTarget);
     // console.log(data);
 
-    firstName = data.get("firstName");
-    lastName = data.get("lastName");
-    userName = data.get("userName");
-    email = data.get("email");
-    password = data.get("password");
-    passwordConfirm = data.get("passwordConfirm");
+    setFirstName(data.get("firstName"));
+    setLastName(data.get("lastName"));
+    setUserName(data.get("userName"));
+    setEmail(data.get("email"));
+    setPassword(data.get("password"));
+    setPasswordConfirm(data.get("passwordConfirm"));
 
     if (
       firstName === "" ||

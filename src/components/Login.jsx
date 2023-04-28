@@ -15,6 +15,7 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useMutation } from "@apollo/client";
 import { useNavigate } from "react-router-dom";
 import { LOGIN } from "../mutations/userMutation";
+import { useLoginStore } from "../store/store";
 
 function Copyright(props) {
   return (
@@ -31,8 +32,9 @@ const theme = createTheme();
 export default function Login() {
   const navigate = useNavigate();
 
-  let [email, setEmail] = useState("");
-  let [password, setPassword] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const setLoggedIn = useLoginStore((state) => state.setLoggedIn);
 
   const [login] = useMutation(LOGIN, {
     variables: {
@@ -45,8 +47,8 @@ export default function Login() {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
 
-    email = data.get("email");
-    password = data.get("password");
+    setEmail(data.get("email"));
+    setPassword(data.get("password"));
 
     if (email === "" || password === "") {
       alert("Please fill all the fields");
@@ -60,6 +62,7 @@ export default function Login() {
         // console.log(res);
         const token = res.data.login.jwtToken;
         localStorage.setItem("token", token);
+        setLoggedIn(true);
       })
       .catch((err) => {
         console.log(err);
