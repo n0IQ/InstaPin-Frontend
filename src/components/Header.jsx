@@ -16,7 +16,7 @@ function Header() {
       setLoggedIn(true);
       const decoded = jwt.decode(token);
       setUserName(decoded.userName);
-      console.log(loggedIn, userName);
+      // console.log(loggedIn, userName);
     }
   }, [loggedIn, userName, localStorage.getItem("token")]);
 

@@ -82,7 +82,7 @@ export default function SignUp() {
         localStorage.setItem("token", token);
       })
       .catch((err) => {
-        console.log(err);
+        console.log("error", err);
       });
 
     setFirstName("");

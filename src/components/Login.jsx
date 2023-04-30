@@ -55,8 +55,6 @@ export default function Login() {
       return;
     }
 
-    console.log(email, password);
-
     login(email, password)
       .then((res) => {
         // console.log(res);
@@ -65,7 +63,7 @@ export default function Login() {
         setLoggedIn(true);
       })
       .catch((err) => {
-        console.log(err);
+        console.log("error", err);
         alert("Invalid credentials");
       });
 

@@ -1,16 +1,45 @@
-import React from "react";
+import React, { useState } from "react";
+import { useMutation, useQuery } from "@apollo/client";
+import jwt from "jsonwebtoken";
 import { useParams } from "react-router-dom";
-import { useQuery } from "@apollo/client";
 import { GET_PIN } from "../queries/pinQueries";
+import { SAVE_PIN } from "../mutations/pinMutation";
 
 export default function Pin() {
-  const { id } = useParams();
-  const { data, loading, error } = useQuery(GET_PIN, { variables: { id } });
+  const pinId = useParams().id;
+  const token = localStorage.getItem("token");
+  const decodedToken = jwt.decode(token);
+  const userId = decodedToken.id;
+
+  const { data, loading, error } = useQuery(GET_PIN, {
+    variables: { id: pinId },
+  });
+
+  const [savePin] = useMutation(SAVE_PIN, {
+    variables: {
+      pinId,
+      userId,
+    },
+  });
+
+  const [isSaved, setIsSaved] = useState(false);
 
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error...</div>;
 
-  console.log(data);
+  const handleSave = () => {
+    savePin(pinId, userId)
+      .then(() => {
+        setIsSaved(true);
+
+        setTimeout(() => {
+          setIsSaved(false);
+        }, 2000);
+      })
+      .catch((err) => {
+        console.log("Error", err);
+      });
+  };
 
   return (
     <>
@@ -30,6 +59,16 @@ export default function Pin() {
                 </a>
               )}
               <p>Created by {data.pin.user.userName}</p>
+              <div style={{ textAlign: "right" }}>
+                <button className="save-button" onClick={handleSave}>
+                  Save
+                </button>
+                {isSaved && (
+                  <p className="save-message" style={{ display: "block" }}>
+                    Pin saved!
+                  </p>
+                )}
+              </div>
             </div>
           </div>
         </div>

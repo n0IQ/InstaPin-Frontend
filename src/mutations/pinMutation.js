@@ -48,6 +48,30 @@ const UPDATE_PIN = gql`
   }
 `;
 
+const SAVE_PIN = gql`
+  mutation savePin($pinId: ID!, $userId: ID!) {
+    savePin(pinId: $pinId, userId: $userId) {
+      id
+      title
+      imageUrl
+      description
+      link
+    }
+  }
+`;
+
+const REMOVE_PIN = gql`
+  mutation removePin($pinId: ID!, $userId: ID!) {
+    removePin(pinId: $pinId, userId: $userId) {
+      id
+      title
+      imageUrl
+      description
+      link
+    }
+  }
+`;
+
 const DELETE_PIN = gql`
   mutation deletePin($id: ID!) {
     deletePin(id: $id) {
@@ -60,4 +84,4 @@ const DELETE_PIN = gql`
   }
 `;
 
-export { ADD_PIN, UPDATE_PIN, DELETE_PIN };
+export { ADD_PIN, UPDATE_PIN, SAVE_PIN, REMOVE_PIN, DELETE_PIN };

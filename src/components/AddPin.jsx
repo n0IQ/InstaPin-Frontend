@@ -35,11 +35,11 @@ const UploadPinForm = () => {
     );
   }, []);
 
-  let [title, setTitle] = useState("");
-  let [description, setDescription] = useState("");
-  let [imageFile, setImageFile] = useState(null);
-  let [imageUrl, setImageUrl] = useState("");
-  let [link, setLink] = useState("");
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+  const [imageFile, setImageFile] = useState(null);
+  const [imageUrl, setImageUrl] = useState("");
+  const [link, setLink] = useState("");
 
   const [createPin] = useMutation(ADD_PIN, {
     variables: {
@@ -61,14 +61,15 @@ const UploadPinForm = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    const formData = new FormData();
+    // const formData = new FormData();
+    const data = new FormData(event.currentTarget);
 
-    formData.append("title", title);
-    formData.append("description", description);
-    formData.append("imageFile", imageFile);
-    formData.append("link", link);
+    setTitle(data.get("title"));
+    setDescription(data.get("description"));
+    setImageFile(data.get("imageFile"));
+    setLink(data.get("link"));
 
-    createPin({ variables: formData })
+    createPin({ variables: title, description, imageFile, link })
       .then((res) => {
         console.log(res);
       })
