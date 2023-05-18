@@ -1,10 +1,11 @@
 import React from "react";
+import { useQuery, useMutation } from "@apollo/client";
 import jwt from "jsonwebtoken";
+import { GET_MY_PINS } from "../queries/pinQueries";
+import { DELETE_PIN } from "../mutations/pinMutation";
 import Box from "@mui/material/Box";
 import ImageList from "@mui/material/ImageList";
 import ImageListItem from "@mui/material/ImageListItem";
-import { useQuery } from "@apollo/client";
-import { GET_MY_PINS } from "../queries/pinQueries";
 
 export default function MyPins() {
   const token = localStorage.getItem("token");
@@ -14,8 +15,6 @@ export default function MyPins() {
   const { data, loading, error } = useQuery(GET_MY_PINS, {
     variables: { id: userId },
   });
-
-  //   console.log("data", data);
 
   if (loading) return <div>loading...</div>;
   if (error) return <div>error...</div>;

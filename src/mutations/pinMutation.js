@@ -73,8 +73,8 @@ const REMOVE_PIN = gql`
 `;
 
 const DELETE_PIN = gql`
-  mutation deletePin($id: ID!) {
-    deletePin(id: $id) {
+  mutation deletePin($pinId: ID!, $userId: ID!) {
+    deletePin(pinId: $pinId, userId: $userId) {
       id
       title
       imageUrl
